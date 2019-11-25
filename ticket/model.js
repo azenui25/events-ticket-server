@@ -1,10 +1,11 @@
 const Sequelize = require("sequelize");
 const db = require("../db");
+const Event = require('../event/model')
 
 const Ticket = db.define("ticket", {
-    author:{
+    name:{
         type: Sequelize.STRING,
-        field: 'Author'
+        field: 'Name'
     },
     price: {
         type: Sequelize.STRING,
@@ -16,5 +17,10 @@ const Ticket = db.define("ticket", {
     }
 
 });
+
+
+
+Ticket.belongsTo(Event)
+Event.hasMany(Ticket)
 
 module.exports = Ticket
