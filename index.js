@@ -42,11 +42,14 @@ const loggingMiddleWare = (req, res, next) => {
 app
     // .use(authMiddleware)
     .use(loggingMiddleWare)
-    .use(eventRouter)
+    .use(corsMiddleWAre)
+    .use(bodyParserMiddleWare)
     .use(userRouter)
     .use(authRouter)
-    .use(bodyParserMiddleWare)
-    .use(corsMiddleWAre)
+    .use(eventRouter)
+    
+
+ 
 
 
 db.sync({ force: true })
