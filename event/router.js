@@ -1,6 +1,7 @@
 const { Router } = require("express");
 const router = new Router();
 const Event = require("./model");
+const Ticket = require('../ticket/model')
 
 router.get("/events", (req, res, next) => {
   Event.findAll()
