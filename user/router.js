@@ -22,4 +22,21 @@ router.post('/user', async (req, res, next) => {
 
 })
 
+router.put('/users/:userId', (req, res) => {
+  User.findByPk(req.params.userId)
+      .then(user => {
+          return user.update(req.body)
+      })
+      .then(updatedUser => {
+          res.status(200).send(updatedUser)
+      })
+})
+
+router.get('/users', (req, res) => {
+  User.findAll()
+      .then((users) => {
+          res.status(200).json(users)
+      })
+})
+
 module.exports = router

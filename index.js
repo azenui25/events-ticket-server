@@ -67,7 +67,7 @@ db.sync({ force: true })
 
     })
 
-
+    
     .then(() => {
         const tickets = [
           {  name:'Full conference', price: 'EUR 1000', description: 'Get  access to all the events of the conference', eventId: 1},
