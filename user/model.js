@@ -6,6 +6,11 @@ const Comment= require('../comment/model')
 
 
 const User = db.define("user", {
+  userName: {
+    type: Sequelize.STRING,
+    allowNull: true
+  },
+
   email: {
     type: Sequelize.STRING,
     allowNull: false,
@@ -14,12 +19,8 @@ const User = db.define("user", {
   password: {
     type: Sequelize.STRING,
     allowNull: false
-  },
-  userName: {
-    type: Sequelize.STRING,
-    
   }
-
+ 
 });
 
 User.hasMany(Ticket);
