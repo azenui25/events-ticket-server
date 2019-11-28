@@ -25,6 +25,6 @@ const Event = db.define("event", {
 });
 
 Event.hasMany(Ticket);
-
+Ticket.belongsTo(Event);
 
 module.exports = Event

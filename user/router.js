@@ -6,7 +6,7 @@ const router = new Router();
 
 router.post('/user', (req, res, next) => {
   const user = {
-    firstName: req.body.firstName,
+    userName: req.body.userName,
     email: req.body.email,
     password: bcrypt.hashSync(req.body.password, 10)
   }
@@ -24,7 +24,7 @@ router.post('/user', (req, res, next) => {
             .then(user2 =>
               res.status(200).json({
                 id: user2.id,
-                firstName: user2.firstName,
+                userName: user2.userName,
                 email: user2.email
               }))
         } else {
