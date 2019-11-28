@@ -4,39 +4,38 @@ const bcrypt = require('bcrypt')
 
 const router = new Router();
 
-router.post('/user', async (req, res, next) => {
-  console.log("create user")
-  try {
-    const user = await User.create({
-        email: req.body.email,
-        password :  bcrypt.hashSync(req.body.password, 10)
-    })
-
-    res
-      .status(201)
-      .send(user)
-      // .catch(err => next(err))
-  } catch (error) {
-    next(error)
+router.post('/user', (req, res, next) => {
+  const user = {
+    firstName: req.body.firstName,
+    email: req.body.email,
+    password: bcrypt.hashSync(req.body.password, 10)
   }
 
-})
+  if (user.email == null || user.password == null ||
+    !user.email || !user.password) {
+    res.status(400).send({
+      message: 'Please supply a valid email and password'
+    })
+  } else {
+    User.findOne({ where: { email: user.email } })
+      .then(user1 => {
+        if (!user1) {
+          return User.create(user)
+            .then(user2 =>
+              res.status(200).json({
+                id: user2.id,
+                firstName: user2.firstName,
+                email: user2.email
+              }))
+        } else {
+          res.status(400).send({
+            message: 'user exist'
+          })
+        }
+      })
+      .catch(next)
+  }
 
-router.put('/users/:userId', (req, res) => {
-  User.findByPk(req.params.userId)
-      .then(user => {
-          return user.update(req.body)
-      })
-      .then(updatedUser => {
-          res.status(200).send(updatedUser)
-      })
-})
-
-router.get('/users', (req, res) => {
-  User.findAll()
-      .then((users) => {
-          res.status(200).json(users)
-      })
 })
 
 module.exports = router

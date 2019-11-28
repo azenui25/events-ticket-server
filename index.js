@@ -16,6 +16,8 @@ const db = require('./db')
 //models
 const Event = require('./event/model')
 const Ticket = require('./ticket/model')
+const Comment = require('./comment/model')
+
 
 
 
@@ -26,7 +28,7 @@ const eventRouter = require('./event/router')
 const userRouter = require('./user/router')
 const authRouter = require('./auth/router')
 const ticketRouter = require('./ticket/router')
-
+const commentRouter = require('./comment/router')
 // init
 const app = express()
 const port = process.env.PORT || 4000
@@ -48,8 +50,10 @@ app
     .use(bodyParserMiddleWare)
     .use(userRouter)
     .use(authRouter)
+    .use(commentRouter)
     .use(eventRouter)
     .use(ticketRouter)
+    
 
 
 

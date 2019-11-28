@@ -1,9 +1,11 @@
 const Sequelize = require("sequelize");
 const db = require("../db");
+const Ticket = require('../ticket/model')
 
 const Event = db.define("event", {
     name:{
         type: Sequelize.STRING,
+        allowNull: false,
         field: 'Name'
     },
     description: {
@@ -12,6 +14,7 @@ const Event = db.define("event", {
     },
     logo: {
         type: Sequelize.STRING,
+        allowNull: false,
         field: 'Logo'
     },
     date:{
@@ -20,5 +23,8 @@ const Event = db.define("event", {
     },
 
 });
+
+Event.hasMany(Ticket);
+
 
 module.exports = Event
