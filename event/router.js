@@ -1,37 +1,38 @@
 const { Router } = require("express");
 const router = new Router();
 const Event = require("./model");
-const Ticket = require('../ticket/model')
+// const Ticket = require('../ticket/model')
+const auth = require('../auth/middleware')
 
-router.get("/events", (req, res, next) => {
-  Event.findAll()
-  .then(events => {
-      res.send(events)
+router.get('/event',
+  (req, res, next) => {
+    Event.findAll()
+      .then(events => res.send(events))
+      .catch(next)
   })
-  .catch(next)
-})
 
-router.get("/events/:eventId", (req, res, next) => {
-  Event.findByPk(req.params.eventId, { include: [Ticket] })
-    .then(event => {
-      res.send(event);
-    })
-    .catch(next);
-});
+router.get('/event/:id',
+  (req, res, next) => {
+    const eventId = req.params.id
+    Event.findByPk(eventId)
+      .then(event => res.send(event))
+      .catch(next)
+  })
 
+router.post('/event', auth,
+  (req, res, next) => {
+    const event = {
+      name: req.body.name,
+      picture: req.body.picture,
+      description: req.body.description,
+      userId: req.body.user
+    }
+    Event.create(event)
+      .then(event => res.send(event))
+      .catch(next)
+  })
 
-// Create a new event account
-router.post("/events" , (req, res, next) => {
-  console.log("Do we have the user of this request?", req.user);
-  
-
-  // const userId = req.body.userId // NO!
-  Event.create(req.body)
-    .then(event => res.json(event))
-    .catch(next);
-});
-
-router.delete("/events/:eventId", (req, res, next) => {
+router.delete("/event/:id", (req, res, next) => {
   // console.log('WHAT IS REQ.PARAMS before we get wrecked by params', req.params)
 
 
@@ -50,7 +51,7 @@ router.delete("/events/:eventId", (req, res, next) => {
     .catch(next);
 });
 
-router.put("/events/:eventId", (req, res, next) => {
+router.put("/event/:id", (req, res, next) => {
   // res.send('oh hi')
   // console.log(req.params, 'WRECKED BY PARAMS??')
   Event.findByPk(req.params.eventId)
