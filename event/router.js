@@ -3,6 +3,7 @@ const router = new Router();
 const Event = require("./model");
 // const Ticket = require('../ticket/model')
 const auth = require('../auth/middleware')
+const user= require ('../user/model')
 
 router.get('/event',
   (req, res, next) => {
@@ -19,14 +20,27 @@ router.get('/event/:id',
       .catch(next)
   })
 
+  router.get("/even/:id", (req, res, next) => {
+    Event.findByPk(req.params.id, { include: [user] })
+      .then(event => {
+        res.send(event);
+      })
+      .catch(next);
+  });
+
+
 router.post('/event', auth,
   (req, res, next) => {
     const event = {
       name: req.body.name,
       picture: req.body.picture,
       description: req.body.description,
-      userId: req.body.user
+      userId: req.user.id
     }
+
+
+
+    console.log(event)
     Event.create(event)
       .then(event => res.send(event))
       .catch(next)

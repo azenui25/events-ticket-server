@@ -6,7 +6,7 @@ const bcrypt = require('bcrypt')
 const router = new Router()
 
 // define endpoints here
-router.post('/login', (req, res) => {
+router.post('/login', (req, res, next) => {
     if(!req.body.email || !req.body.password){
         return res.status(400)
         .send({ message: 'Please put in your teacher credentials' })

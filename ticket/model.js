@@ -17,7 +17,7 @@ const Ticket = db.define("ticket", {
     },
 
     time: {
-        type: Sequelize.INTEGER,
+        type: Sequelize.STRING,
         defaultValue: new Date().getHours()
       },
 
