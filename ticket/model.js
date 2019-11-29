@@ -11,7 +11,7 @@ const Ticket = db.define("ticket", {
         field: 'Name'
     },
     price: {
-        type: Sequelize.STRING,
+        type: Sequelize.INTEGER,
         allowNull: false,
         field: 'Price'
     },
