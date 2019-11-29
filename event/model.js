@@ -5,22 +5,18 @@ const Ticket = require('../ticket/model')
 const Event = db.define("event", {
     name:{
         type: Sequelize.STRING,
-        allowNull: false,
         field: 'Name'
     },
+
     description: {
         type: Sequelize.STRING,
         field: 'Description'
     },
-    logo: {
+    picture: {
         type: Sequelize.STRING,
-        allowNull: false,
-        field: 'Logo'
+        field: 'picture'
     },
-    date:{
-        type: Sequelize.STRING,
-        field: 'Date'
-    },
+   
 
 });
 

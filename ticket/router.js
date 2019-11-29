@@ -44,11 +44,13 @@ router.get('/ticket/:id',
 router.post('/ticket', auth,
 (req, res, next) => {
   const ticket = {
+    name: req.body.name,
     price: req.body.price,
     description: req.body.description,
-    userId: req.body.user,
+    userId: req.user.id,
     eventId: req.body.eventId
   }
+  console.log('TICKET', ticket)
   Ticket.create(ticket)
     .then(tickets => res.send(tickets))
     .catch(next)

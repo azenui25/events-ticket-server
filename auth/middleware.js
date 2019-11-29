@@ -8,6 +8,7 @@ function authMiddleWare(req, res, next) {
   if (auth && auth[0] === "Bearer" && auth[1]) {
     try {
       const data = toData(auth[1]);
+      console.log('DATA', data)
       User.findByPk(data.userId)
         .then(user => {
           if (!user) return next("User does not exist");
